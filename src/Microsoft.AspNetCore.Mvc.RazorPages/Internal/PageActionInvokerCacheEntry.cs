@@ -11,10 +11,14 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages.Internal
         public PageActionInvokerCacheEntry(
             CompiledPageActionDescriptor actionDescriptor,
             Func<PageContext, object> pageFactory,
+            Action<PageContext, object> pageDisposer,
+            Func<PageContext, object> modelFactory,
+            Action<PageContext, object> modelDisposer,
             Func<PageContext, IFilterMetadata[]> filterProvider)
         {
             ActionDescriptor = actionDescriptor;
             PageFactory = pageFactory;
+            PageDisposer = pageDisposer;
             FilterProvider = filterProvider;
         }
 
@@ -22,6 +26,12 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages.Internal
 
         public Func<PageContext, object> PageFactory { get; }
 
-        Func<PageContext, IFilterMetadata[]> FilterProvider { get; }
+        public Action<PageContext, object> PageDisposer { get; }
+
+        public Func<PageContext, object> ModelFactory { get; }
+
+        public Action<PageContext, object> ModelDisposer { get; }
+
+        public Func<PageContext, IFilterMetadata[]> FilterProvider { get; }
     }
 }
